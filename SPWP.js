@@ -1592,14 +1592,15 @@ export default class SparePartsWorkplacePage extends Component {
                         </Menu>
                         <Button
                             icon={<SearchOutlined />}
-                            onClick={() => this.handleSearch(selectedKeys, confirm, 'agreement')}
+                            onClick={() => this.handleSearch(confirm, selectedKeys)}
                             size='small'
                             style={{ width: 90, marginRight: 8 }}
                             type='primary'
                         >
                             <FormattedMessage id='search' />
                         </Button>
-                        <Button onClick={() => this.handleReset(clearFilters)} size='small' style={{ width: 90 }}>
+                        {/* <Button onClick={() => this.handleReset(confirm, clearFilters, selectedKeys)} size='small' style={{ width: 90 }}> */}
+                        <Button onClick={() =>  window.location.reload()} size='small' style={{ width: 90 }}>
                             <FormattedMessage id='reset' />
                         </Button>
                     </div>
@@ -1733,37 +1734,43 @@ export default class SparePartsWorkplacePage extends Component {
                 className: Styles.tableColumn,
                 filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
                     <div style={{ padding: 8 }}>
-                      <Select
-                        mode='multiple'
-                        allowClear
-                        placeholder={<FormattedMessage id='status.placeholder' />}
-                        value={selectedKeys}
-                        onChange={value => {
-                          setSelectedKeys(value);
-                        }}
-                        style={{ width: '100%' }}
-                      >
-                        {this.state.statuses.map(({ status }) => (
-                          <Select.Option key={status} value={status}>
-                            <FormattedMessage id={`status.${status}`} />
-                          </Select.Option>
-                        ))}
-                      </Select>
-                      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}>
+                        {/* <Input
+                            ref={node => {
+                            this.searchInput = node;
+                            }}
+                            placeholder={this.props.intl.formatMessage({id: 'search'})}
+                            value={selectedKeys[0]}
+                            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                            onPressEnter={() => this.handleSearch(selectedKeys, confirm, 'status')}
+                            style={{ width: 188, marginBottom: 8, display: 'block' }}
+                        /> */}
+                        <Menu>
+                            {this.state.statuses.map(({ status }) => (
+                                <Menu.Item
+                                    key={status}
+                                    onClick={() => {
+                                        setSelectedKeys([status]);
+                                    }}
+                                >
+                                    <FormattedMessage id={`status.${status}`} />
+                                </Menu.Item>
+                            ))}
+                        </Menu>
                         <Button
-                          type='primary'
-                          size='small'
-                          onClick={() => this.handleSearch(selectedKeys, confirm, 'status')}
-                          style={{ marginRight: 8 }}
+                            icon={<SearchOutlined />}
+                            onClick={() => this.handleSearch(confirm, selectedKeys)}
+                            size='small'
+                            style={{ width: 90, marginRight: 8 }}
+                            type='primary'
                         >
-                          <FormattedMessage id='search' />
+                            <FormattedMessage id='search' />
                         </Button>
-                        <Button size='small' onClick={() => this.handleReset(clearFilters)}>
-                          <FormattedMessage id='reset' />
+                        {/* <Button onClick={() => this.handleReset(confirm, clearFilters, selectedKeys)} size='small' style={{ width: 90 }}> */}
+                        <Button onClick={() => window.location.reload()} size='small' style={{ width: 90 }}>
+                            <FormattedMessage id='reset' />
                         </Button>
-                      </div>
                     </div>
-                  ),
+                ),
                 filterIcon: filtered => <FilterOutlined style={{ color: filtered ? 'var(--primary)' : undefined }} />,
                 onFilter: (value, record) => String(record.status).toLowerCase().includes(value.toLowerCase()),
                 onFilterDropdownVisibleChange: visible => {
@@ -2241,7 +2248,7 @@ export default class SparePartsWorkplacePage extends Component {
     handleSearch = async (confirm, dataIndex) => {
         confirm();
         this.getPartsInLabor();
-        await this.changeSparePartsWorkplaceDataFilters({ [dataIndex]: this.state[dataIndex] });
+        this.changeSparePartsWorkplaceDataFilters({ [dataIndex]: this.state[dataIndex] });
     };
 
     handleReset = async (confirm, clearFilters, dataIndex) => {
