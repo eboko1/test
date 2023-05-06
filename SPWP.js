@@ -31,14 +31,14 @@ import {
     Input,
     Menu,
     Modal,
-    notification,
     Popconfirm,
     Popover,
     Radio,
     Select,
     Table,
     Tabs,
-    Tooltip
+    Tooltip,
+    notification
 } from 'antd';
 import { Catcher, Layout } from 'commons';
 import { AvailabilityIndicator, DateRangePicker, HamburgerMenu, ReserveButton } from 'components';
