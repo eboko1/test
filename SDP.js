@@ -118,7 +118,8 @@ class StorageDocumentPage extends Component {
             cells: [],
             businessRequisites: [],
             businessSupplierRequisites: [],
-            clientRequisites: []
+            clientRequisites: [],
+            orderId: null
         };
     }
 
@@ -226,7 +227,12 @@ class StorageDocumentPage extends Component {
         });
         this.updateDocument();
     };
-
+    
+    setSelectedOrderId = (orderId) => {
+        this.setState({ orderId });
+        this.updateDocument();
+        console.log('orderIdorderId', orderId)
+      };
     // saveFormRef = formRef => {
     //    this.formRef = formRef;
     // };
