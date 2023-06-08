@@ -122,15 +122,16 @@ class DocProductsTable extends React.Component {
                                                     onClick={() => {
                                                         this.props.saveModal();
                                                         this.props.setModal(MODALS.SELECT_ORDER, {
-                                                            onClick: value => {
-                                                            //     this.setState({
-                                                            //         orderId: value
-                                                            //     });
-                                                            }
-                                                        });
-                                                    }}
-                                                    //value={this.props.orderId}
-                                                >
+                                                            onClick: (value) => {
+                                                              this.setState({
+                                                                orderId: value,
+                                                              });
+                                                              this.props.setSelectedOrderId(value);
+                                                            },
+                                                          });
+                                                        }}
+                                                        value={this.state.orderId}
+                                                    >
                                                     <div>
                                                         <ShoppingOutlined className={Styles.actionMenuIcon} />
                                                         <FormattedMessage id='storage_document.select_order' />
